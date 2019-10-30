@@ -404,7 +404,7 @@ namespace CasinoDLCApp
                 while (isRunning)
                 {
 
-                    Console.WriteLine("Ready for lose all your gold or become a God of betting");
+                    Console.WriteLine("1v1 team betting");
                     Console.ReadKey();
                     Console.Clear();
                     int Pool = 0;
@@ -448,14 +448,14 @@ namespace CasinoDLCApp
 
                         namearray2[p] = Console.ReadLine();
                         Console.Write(namearray2[p] + ": ");
-                        goldarray[p] = int.Parse(Console.ReadLine());
+                        goldarray2[p] = int.Parse(Console.ReadLine());
                         if (namearray2[p] == Host)
                         {
                             coins = 10000 - goldarray2[p];
                         }
 
-                        Pool += goldarray[p];
-                        blueSum += goldarray[p];
+                        Pool += goldarray2[p];
+                        blueSum += goldarray2[p];
                         p++;
 
                     }
@@ -479,11 +479,11 @@ namespace CasinoDLCApp
 
                     while (o < numberofpeople1)
                     {
-                        Console.WriteLine(namearray[o] + "got : " + goldarray[o] + goldarray[o] * 1.5);
-                        Console.WriteLine(namearray2[p] + "got : " + goldarray2[p] * 0.5);
+                        Console.WriteLine(namearray[o] + " got : " + (goldarray[o] + goldarray[o] * 1.5));
+                        Console.WriteLine(namearray2[p] + " got : " + (goldarray2[p] * 0.5));
                         if (namearray[o] == Host)
                         {
-                            coins += (int)Math.Ceiling(goldarray[o] + goldarray[o] * 1.5);
+                            coins += (int)Math.Ceiling(goldarray[o] + (goldarray[o] * 1.5));
 
                         }
                         else if (namearray2[p] == Host)
@@ -505,8 +505,8 @@ namespace CasinoDLCApp
                     }
                     while (p < numberofpeople1)
                     {
-                        Console.WriteLine(namearray2[p] + "got : " + goldarray2[p] + goldarray2[p] * 0.5);
-                        Console.WriteLine(namearray[o] + "got : " + goldarray[o] * 0.5);
+                        Console.WriteLine(namearray2[p] + " got : " + (goldarray2[p] + goldarray2[p] * 0.5));
+                        Console.WriteLine(namearray[o] + " got : " + (goldarray[o] * 0.5));
                         if (namearray[o] == Host)
                         {
                             coins += (int)Math.Ceiling(goldarray[o] * 0.5);

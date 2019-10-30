@@ -36,7 +36,7 @@ namespace CasinoDLCApp
                 else if (reply == "1")
                 {
                     Console.WriteLine("Du har valgt nummer " + reply + ". Du spiller nu \"Team Bracket Betting\".");
-                    TeamBracketBetting(playerCasinoCoins);
+                    playerCasinoCoins = TeamBracketBetting(playerCasinoCoins);
                 }
                 else if (reply == "2")
                 {
@@ -60,8 +60,9 @@ namespace CasinoDLCApp
                 }
             }
 
-            static void TeamBracketBetting(int coins)
+            static int TeamBracketBetting(int coins)
             {
+                int points = 0;
                 int arrayCounter = 0; //Used to count arrays.
                 bool peopleAreDoingSomething = true; //Used in some while loops to catch errors
                 int numberOfTeams = 0;
@@ -80,14 +81,81 @@ namespace CasinoDLCApp
                         Console.WriteLine("Hey! That's not a valid answer!");
                     }
                 }
+                
+                Console.WriteLine("Do you want to read the rules? y/n");
+                string yesno = Console.ReadLine();
+                if (yesno.Contains("y")){
+                    Console.WriteLine("Currently, there are a total of " + numberOfTeams + " teams.");
+                    Console.WriteLine("Rules:");
+                    Console.WriteLine("When you guess a winning team correctly, you will gain 5 points");
+                    Console.WriteLine("When you guess a winning team incorrectly, you will not gain any points");
+                    Console.WriteLine("If you guess 3 games correctly, you won't lose nor gain any coins");
+                    Console.WriteLine("For every game correctly guessed after the first 3, you will gain your inserted amount multiplied by the number of games guessed correctly");
+                    Console.WriteLine("");
+                    Console.WriteLine("Example:");
+                    Console.WriteLine("There are 8 teams. You guess the first 3 correctly");
+                    Console.WriteLine("After these first 3 games, you guess 1 more correctly, so your inserted coins are multiplied by 2");
+                    Console.WriteLine("After that game, you guess 1 more correctly, so your inserted coins are multiplied by 3");
+                    Console.WriteLine("etc.");
+                    Console.WriteLine("GL!");
+                }
 
-                bracketCalculation(numberOfTeams);
+                peopleAreDoingSomething = true;
+                int bettingCoins = 0;
+                while (peopleAreDoingSomething == true)
+                {
+                    Console.WriteLine("How many coins are you betting?");
+                    bettingCoins = int.Parse(Console.ReadLine());
+                    if (bettingCoins > coins)
+                    {
+                        Console.WriteLine("YOU CAN'T DO THAT YOU POOR HUMAN");
+                    } else
+                    {
+                        peopleAreDoingSomething = false;
+                    }
+                }
+                
+                if (bettingCoins > coins)
+                {
 
+                }
+                points = bracketCalculation(numberOfTeams, coins, points, bettingCoins);
 
-
+                if (points < 15)
+                {
+                    return (coins - bettingCoins);
+                }
+                else if (points == 15)
+                {
+                    return (coins);
+                }
+                else if (points == 20)
+                {
+                    return (coins + bettingCoins * 2);
+                }
+                else if (points == 25)
+                {
+                    return (coins + bettingCoins * 3);
+                }
+                else if (points == 30)
+                {
+                    return (coins + bettingCoins * 4);
+                }
+                else if (points == 35)
+                {
+                    return (coins + bettingCoins * 5);
+                }
+                else if (points == 40)
+                {
+                    return (coins + bettingCoins * 6);
+                }
+                else
+                {
+                    return (coins);
+                }
             }
 
-            static void bracketCalculation(int numberOfTeams)
+            static int bracketCalculation(int numberOfTeams, int coins, int points, int bettingCoins)
             {
                 int arrayCounter = 0;
 
@@ -98,6 +166,7 @@ namespace CasinoDLCApp
                 {
                     teamNames[arrayCounter] = Console.ReadLine();
                     arrayCounter++;
+                    Console.WriteLine("----------------------");
                 }
                 arrayCounter = 0;
 
@@ -107,8 +176,6 @@ namespace CasinoDLCApp
                 int arrayCounter2 = 0;
                 while (doingSomethingInt < numberOfTeams)
                 {
-                    int matches = numberOfTeams / 2;
-                    int round = numberOfTeams / 4;
                     string[] teamNumbers = new string[numberOfTeams];
 
                     teamNumbers[arrayCounter] = teamNames[arrayCounter];
@@ -140,9 +207,198 @@ namespace CasinoDLCApp
                     }
                     arrayCounter2++;
                 }
-
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
                 Console.WriteLine(string.Join(", ", bets) + " are your bets!");
+                Console.WriteLine("-----------------------------------------");
+
+                string[] round2Bets = new string[numberOfTeams / 2 / 2];
+                while (doingSomethingInt < numberOfTeams / 2)
+                {
+                    Console.WriteLine(bets[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine(bets[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine("Who are you betting on winning this match?");
+                    string round2bet = Console.ReadLine();
+                    Console.WriteLine("------------------------------------------");
+
+                    if (round2bet.ToUpper().Contains(bets[arrayCounter - 2]) || round2bet.ToUpper().Contains(bets[arrayCounter - 1]) || round2bet.ToLower().Contains(bets[arrayCounter - 2]) || round2bet.ToLower().Contains(bets[arrayCounter - 1]))
+                    {
+                        round2Bets[arrayCounter2] = round2bet;
+                        doingSomethingInt += 2;
+                    }
+                    else
+                    {
+                        Console.WriteLine("That's none of 'em!");
+                    }
+                    arrayCounter2++;
+                }
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
+                Console.WriteLine(string.Join(", ", round2Bets) + " are your bets!");
+                Console.WriteLine("-----------------------------------------");
+
+                string[] round3Bets = new string[numberOfTeams / 2 / 2 / 2];
+                while (doingSomethingInt < numberOfTeams / 2 / 2)
+                {
+                    Console.WriteLine(round2Bets[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine(round2Bets[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine("Who are you betting on winning this match?");
+                    string round3bet = Console.ReadLine();
+                    Console.WriteLine("------------------------------------------");
+
+                    if (round3bet.ToUpper().Contains(round2Bets[arrayCounter - 2]) || round3bet.ToUpper().Contains(round2Bets[arrayCounter - 1]) || round3bet.ToLower().Contains(round2Bets[arrayCounter - 2]) || round3bet.ToLower().Contains(round2Bets[arrayCounter - 1]))
+                    {
+                        round3Bets[arrayCounter2] = round3bet;
+                        doingSomethingInt += 2;
+                    }
+                    else
+                    {
+                        Console.WriteLine("That's none of 'em!");
+                    }
+                    arrayCounter2++;
+                }
+
+                if (round3Bets.Length == 1)
+                {
+                    Console.WriteLine("You're betting on " + round3Bets[0] + " winning!");
+                    Console.WriteLine("-----------------------------------------");
+                }
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
+                Console.WriteLine("LET THE GAMES BEGIN");
+                Console.WriteLine("-------------------");
+                string[] results = new string[numberOfTeams / 2];
+                while (doingSomethingInt < numberOfTeams)
+                {
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine(teamNames[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine(teamNames[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine("Who won?");
+                    string result = Console.ReadLine();
+                    Console.WriteLine("------------------------------------------");
+
+                    if (result.ToUpper().Contains(teamNames[arrayCounter - 2]) || result.ToUpper().Contains(teamNames[arrayCounter - 1]) || result.ToLower().Contains(teamNames[arrayCounter - 2]) || result.ToLower().Contains(teamNames[arrayCounter - 1]))
+                    {
+                        if (result.ToUpper().Contains(bets[arrayCounter2]) || result.ToLower().Contains(bets[arrayCounter2]))
+                        {
+                            points += 5;
+                            results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                        else
+                        {
+                            results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("That's none of 'em!");
+                    }
+                    arrayCounter2++;
+                }
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
+                Console.WriteLine(string.Join(", ", results) + " are the winners!");
+                Console.WriteLine("-----------------------------------------");
+
+                string[] round2Results = new string[results.Length / 2];
+                while (doingSomethingInt < results.Length)
+                {
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine(results[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine(results[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine("Who won?");
+                    string result = Console.ReadLine();
+                    Console.WriteLine("------------------------------------------");
+
+                    if (result.ToUpper().Contains(results[arrayCounter - 2]) || result.ToUpper().Contains(results[arrayCounter - 1]) || result.ToLower().Contains(teamNames[arrayCounter - 2]) || result.ToLower().Contains(teamNames[arrayCounter - 1]))
+                    {
+                        if (result.ToUpper().Contains(round2Bets[arrayCounter2]) || result.ToLower().Contains(round2Bets[arrayCounter2]))
+                        {
+                            points += 5;
+                            round2Results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                        else
+                        {
+                            round2Results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("That's none of 'em!");
+                    }
+                    arrayCounter2++;
+                }
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
+                Console.WriteLine(string.Join(", ", round2Results) + " are the winners!");
+                Console.WriteLine("-----------------------------------------");
+
+                string[] round3Results = new string[round2Results.Length / 2];
+                while (doingSomethingInt < round2Results.Length)
+                {
+                    Console.WriteLine("-----------------------------------------");
+                    Console.WriteLine(round2Results[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine(round2Results[arrayCounter]);
+                    arrayCounter++;
+                    Console.WriteLine("-----------------------------------------");
+                    Console.WriteLine("Who won?");
+                    string result = Console.ReadLine();
+                    Console.WriteLine("-----------------------------------------");
+
+                    if (result.ToUpper().Contains(round2Results[arrayCounter - 2]) || result.ToUpper().Contains(round2Results[arrayCounter - 1]) || result.ToLower().Contains(teamNames[arrayCounter - 2]) || result.ToLower().Contains(teamNames[arrayCounter - 1]))
+                    {
+                        if (result.ToUpper().Contains(round3Bets[arrayCounter2]) || result.ToLower().Contains(round3Bets[arrayCounter2]))
+                        {
+                            points += 5;
+                            round3Results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                        else
+                        {
+                            round3Results[arrayCounter2] = result;
+                            doingSomethingInt += 2;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("That's none of 'em!");
+                    }
+                    arrayCounter2++;
+                }
+                arrayCounter = 0;
+                arrayCounter2 = 0;
+                doingSomethingInt = 0;
+
+                if (round3Results.Length == 1)
+                {
+                    Console.WriteLine(round3Results[0] + " WON!! YOU GOT A TOTAL OF " + points + " POINTS!");
+                    Console.WriteLine("-----------------------------------------");
+                }
+                return (points);
             }
+
             static void teamBetting()
             {
                 Console.WriteLine("Ready for lose all your gold or become a God of betting");

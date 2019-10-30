@@ -41,7 +41,7 @@ namespace CasinoDLCApp
                 else if (reply == "2")
                 {
                     Console.WriteLine("Du har valgt nummer " + reply + ". Du spiller nu \"1v1 Team Betting\".");
-                    teamBetting();
+                    playerCasinoCoins = teamBetting(playerCasinoCoins, playerName);
                 }
                 else if (reply == "3")
                 {
@@ -398,96 +398,139 @@ namespace CasinoDLCApp
                 }
                 return (points);
             }
-
-            static void teamBetting()
+            static int teamBetting(int coins, string Host)
             {
-                Console.WriteLine("Ready for lose all your gold or become a God of betting");
-                Console.ReadKey();
-                Console.Clear();
-                int Pool = 0;
-                //=========================================================================================================
-                Console.Write("How many people bet on Red Team: "); int numberofpeople1 = int.Parse(Console.ReadLine());
-                Console.Clear();
-                Console.WriteLine("whats your names and how much you wanna bet: ");
-
-                int o = 0;
-
-                int RedSum = 0;
-                int[] goldarray = new int[numberofpeople1];
-                string[] namearray = new string[numberofpeople1];
-                while (o < numberofpeople1)
-                {
-                    namearray[o] = Console.ReadLine();
-
-                    Console.Write(namearray[o] + ":");
-                    goldarray[o] = int.Parse(Console.ReadLine());
-                    Pool += goldarray[o];
-                    RedSum += goldarray[o];
-                    o++;
-
-                }
-                Console.Clear();
-                //=========================================================================================================
-                Console.Write("How many people bet on Blue Team: "); int numberofpeople2 = int.Parse(Console.ReadLine());
-                Console.Clear();
-                Console.WriteLine("whats your names and how much you wanna bet: ");
-                int p = 0;
-                int blueSum = 0;
-
-                int[] goldarray2 = new int[numberofpeople2];
-                string[] namearray2 = new string[numberofpeople2];
-                while (p < numberofpeople2)
+                bool isRunning = true;
+                while (isRunning)
                 {
 
-                    namearray2[p] = Console.ReadLine();
-                    Console.Write(namearray2[p] + ": ");
-                    goldarray[p] = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Ready for lose all your gold or become a God of betting");
+                    Console.ReadKey();
+                    Console.Clear();
+                    int Pool = 0;
+                    //=========================================================================================================
+                    Console.Write("How many people bet on Red Team: "); int numberofpeople1 = int.Parse(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("whats your names and how much you wanna bet: ");
 
-                    Pool += goldarray[p];
-                    blueSum += goldarray[p];
-                    p++;
+                    int o = 0;
 
+                    int RedSum = 0;
+                    int[] goldarray = new int[numberofpeople1];
+                    string[] namearray = new string[numberofpeople1];
+                    while (o < numberofpeople1)
+                    {
+                        namearray[o] = Console.ReadLine();
+
+                        Console.Write(namearray[o] + ":");
+                        goldarray[o] = int.Parse(Console.ReadLine());
+                        if (namearray[o] == Host)
+                        {
+                            coins = 10000 - goldarray[o];
+                        }
+                        Pool += goldarray[o];
+                        RedSum += goldarray[o];
+                        o++;
+
+                    }
+                    Console.Clear();
+                    //=========================================================================================================
+                    Console.Write("How many people bet on Blue Team: "); int numberofpeople2 = int.Parse(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("whats your names and how much you wanna bet: ");
+                    int p = 0;
+                    int blueSum = 0;
+
+                    int[] goldarray2 = new int[numberofpeople2];
+                    string[] namearray2 = new string[numberofpeople2];
+                    while (p < numberofpeople2)
+                    {
+
+                        namearray2[p] = Console.ReadLine();
+                        Console.Write(namearray2[p] + ": ");
+                        goldarray[p] = int.Parse(Console.ReadLine());
+                        if (namearray2[p] == Host)
+                        {
+                            coins = 10000 - goldarray2[p];
+                        }
+
+                        Pool += goldarray[p];
+                        blueSum += goldarray[p];
+                        p++;
+
+                    }
+                    Console.Clear();
+                    //===========================================================================================
+                    //int RedRatio = (Pool / RedSum);
+                    //int blueRatio = (Pool / blueSum);
+                    Console.WriteLine("Lets see how many gold in our Pool!!      ");
+                    Console.ReadLine();
+                    Console.WriteLine(Pool);
+                    Console.ReadLine();
+                    Random randomnumber = new Random();
+                    int Winlose = randomnumber.Next(0, 2);
+                    //===================================================================================== Red win 红方胜
+                    if (Winlose == 0)
+                    {
+                        Console.WriteLine("Red win!!");
+                        o = 0;
+                        p = 0;
+                    }
+
+                    while (o < numberofpeople1)
+                    {
+                        Console.WriteLine(namearray[o] + "got : " + goldarray[o] + goldarray[o] * 1.5);
+                        Console.WriteLine(namearray2[p] + "got : " + goldarray2[p] * 0.5);
+                        if (namearray[o] == Host)
+                        {
+                            coins += (int)Math.Ceiling(goldarray[o] + goldarray[o] * 1.5);
+
+                        }
+                        else if (namearray2[p] == Host)
+                        {
+                            coins += (int)Math.Ceiling(goldarray2[p] * 0.5);
+                        }
+                        o++;
+                        p++;
+                    }
+                    Console.ReadLine();
+
+                    //====================================================================================== Blue win
+
+                    if (Winlose == 1)
+                    {
+                        Console.WriteLine("Blue win!!");
+                        p = 0;
+                        o = 0;
+                    }
+                    while (p < numberofpeople1)
+                    {
+                        Console.WriteLine(namearray2[p] + "got : " + goldarray2[p] + goldarray2[p] * 0.5);
+                        Console.WriteLine(namearray[o] + "got : " + goldarray[o] * 0.5);
+                        if (namearray[o] == Host)
+                        {
+                            coins += (int)Math.Ceiling(goldarray[o] * 0.5);
+
+                        }
+                        else if (namearray2[p] == Host)
+                        {
+                            coins += (int)Math.Ceiling(goldarray2[p] * 1.5);
+                        }
+                        p++;
+                        o++;
+
+                    }
+                    Console.Write("Will play again? n/y ");
+                    string reply = Console.ReadLine();
+                    if (reply.ToLower() == "n")
+                    {
+                        isRunning = false;
+                    }
                 }
-                Console.Clear();
-                //===========================================================================================
-                int RedRatio = (Pool / RedSum);
-                int blueRatio = (Pool / blueSum);
-                Console.WriteLine("Lets see how many gold in our Pool!!      ");
-                Console.ReadLine();
-                Console.WriteLine(Pool);
-                Console.ReadLine();
-                Random randomnumber = new Random();
-                int Winlose = randomnumber.Next(0, 2);
-                if (Winlose == 0)
-                {
-                    Console.WriteLine("Red win!!");
-                    o = 0;
-                }
-
-                while (o < numberofpeople1)
-                {
-                    Console.WriteLine(namearray[o] + "got : " + goldarray[o] + goldarray[o] * (1 - goldarray[o] / RedRatio));
-                    o++;
-                }
-                Console.ReadLine();
-
-
-
-                if (Winlose == 1)
-                {
-                    Console.WriteLine("Blue win!!");
-                    p = 0;
-                }
-                while (p < numberofpeople1)
-                {
-                    Console.WriteLine(namearray2[p] + "got : " + goldarray2[p] + goldarray2[p] * (1 - goldarray2[p] / blueRatio));
-                    p++;
-
-                }
-                Console.ReadLine();
+                return coins;
             }
 
-        static int slotMachine(int coins)
+            static int slotMachine(int coins)
             {
                 Console.WriteLine("Du har lige nu " + coins + " coins.");
                 bool isRunning = true;

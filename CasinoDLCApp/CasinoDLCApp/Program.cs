@@ -746,7 +746,7 @@ namespace CasinoDLCApp
                 Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
                 //Generating a random card number
-                string[] array = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "10", "10", "10", "11" };
+                string[] array = { "6", "7", "8", "9", "6", "7", "8", "9", "10", "10", "10", "10", "8" };
                 Random randomNumber = new Random();
                 int husetsFørsteKort = randomNumber.Next(array.Length);
                 int husetsAndetKort = randomNumber.Next(array.Length);
@@ -763,7 +763,6 @@ namespace CasinoDLCApp
                 if (husetsFørsteKort == 12 && husetsAndetKort == 8 || husetsFørsteKort == 12 && husetsAndetKort == 9 || husetsFørsteKort == 12 && husetsAndetKort == 10 || husetsFørsteKort == 12 && husetsAndetKort == 11 || husetsAndetKort == 12 && husetsFørsteKort == 8 || husetsAndetKort == 12 && husetsFørsteKort == 9 || husetsAndetKort == 12 && husetsFørsteKort == 10 || husetsAndetKort == 12 && husetsFørsteKort == 11)
                 {
                     Console.WriteLine("House got BJ");
-                    indsatCoins -= Bet;
                 }
 
                 //You get Black Jack

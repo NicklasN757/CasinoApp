@@ -104,9 +104,9 @@ namespace CasinoDLCApp
                 string[] bets = new string[numberOfTeams / 2];
                 bool doingSomething = false;
                 int doingSomethingInt = 0;
+                int arrayCounter2 = 0;
                 while (doingSomethingInt < numberOfTeams)
                 {
-                    int arrayCounter2 = 0;
                     int matches = numberOfTeams / 2;
                     int round = numberOfTeams / 4;
                     string[] teamNumbers = new string[numberOfTeams];
@@ -128,19 +128,19 @@ namespace CasinoDLCApp
                         string bet = Console.ReadLine();
                         Console.WriteLine("------------------------------------------");
 
-                        if (bet.ToLower().Contains(teamNumbers[arrayCounter - 2]) || bet.ToLower().Contains(teamNumbers[arrayCounter - 1]))
+                        if (bet.ToUpper().Contains(teamNumbers[arrayCounter - 2]) || bet.ToUpper().Contains(teamNumbers[arrayCounter - 1]) || bet.ToLower().Contains(teamNumbers[arrayCounter - 2]) || bet.ToLower().Contains(teamNumbers[arrayCounter - 1]))
                         {
                             bets[arrayCounter2] = bet;
-                            arrayCounter2++;
                             doingSomething = false;
                         }
                         else
                         {
-                            Console.WriteLine("That's not of 'em!");
+                            Console.WriteLine("That's none of 'em!");
                         }
                     }
-
+                    arrayCounter2++;
                 }
+
                 Console.WriteLine(string.Join(", ", bets) + " are your bets!");
             }
             static void teamBetting()

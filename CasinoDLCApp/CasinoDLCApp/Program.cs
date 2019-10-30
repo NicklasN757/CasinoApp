@@ -491,7 +491,7 @@ namespace CasinoDLCApp
                     {
                         //int spillerensTredjeKort = randomNumber.Next(array.Length);
                         Blue();
-                        Console.WriteLine("You drew a " + spillerensTredjeKort);
+                        Console.WriteLine("You drew a " + array[spillerensTredjeKort]);
                         Console.WriteLine("Your cards are: " + array[spillerensFørsteKort] + " & " + array[spillerensAndetKort] + " & " + array[spillerensTredjeKort]);
                         Red();
                         Console.WriteLine("The house got " + array[husetsFørsteKort] + " & " + array[husetsAndetKort] + " & " + array[husetsTredjeKort]);
@@ -506,31 +506,26 @@ namespace CasinoDLCApp
                         {
                             Console.WriteLine("You Win!");
                             indsatCoins += Bet;
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         //Losing else if statement with 3 house cards
                         else if (husetsKortPointsMedTreKort < 22)
                         {
                             Console.WriteLine("You Lose!");
                             indsatCoins -= Bet;
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         else if (husetsKortPointsMedTreKort > 21)
                         {
                             Console.WriteLine("You Win!");
                             indsatCoins += Bet;
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         else if (spillerensHåndPointsMedTreKort > 21)
                         {
                             Console.WriteLine("You Lose!");
                             indsatCoins -= Bet;
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         else
                         {
                             Console.WriteLine("It's a draw");
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         return indsatCoins;
                     }
@@ -573,7 +568,7 @@ namespace CasinoDLCApp
                     {
                         //int spillerensTredjeKort = randomNumber.Next(array.Length);
                         Blue();
-                        Console.WriteLine("You drew a " + spillerensTredjeKort);
+                        Console.WriteLine("You drew a " + array[spillerensTredjeKort]);
                         Console.WriteLine("Your cards are: " + array[spillerensFørsteKort] + " & " + array[spillerensAndetKort] + " & " + array[spillerensTredjeKort]);
                         Red();
                         Console.WriteLine("The house got " + array[husetsFørsteKort] + " & " + array[husetsAndetKort]);

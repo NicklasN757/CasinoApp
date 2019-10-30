@@ -557,7 +557,6 @@ namespace CasinoDLCApp
                         {
                             Console.WriteLine("You Win!");
                             indsatCoins -= Bet;
-                            Console.WriteLine("And now you've got: " + indsatCoins);
                         }
                         return indsatCoins;
                     }
@@ -584,14 +583,12 @@ namespace CasinoDLCApp
                         {
                             Console.WriteLine("You Win!");
                             indsatCoins += Bet;
-                            Console.WriteLine("And now you've got " + indsatCoins);
                         }
                         //Losing else if statement 3 player cards 2 house cards
                         else if(spillerensHåndPointsMedTreKort < husetKortPointsMedToKort && husetKortPointsMedToKort < 22)
                         {
                             Console.WriteLine("You Lose!");
                             indsatCoins -= Bet;
-                            Console.WriteLine("And now you've got " + indsatCoins);
                         }
                         return indsatCoins;
                     }
@@ -617,13 +614,15 @@ namespace CasinoDLCApp
                         {
                             Console.WriteLine("You Win!");
                             indsatCoins += Bet;
-                            Console.WriteLine("Now you've got " + indsatCoins);
+                        }
+                        else if(spillerensHåndPointsMedToKort == husetKortPointsMedToKort || husetKortPointsMedToKort == spillerensHåndPointsMedTreKort || spillerensHåndPointsMedTreKort == husetKortPointsMedToKort || spillerensHåndPointsMedTreKort == husetsKortPointsMedTreKort)
+                        {
+                            Console.WriteLine("It's a draw!");
                         }
                         else
                         {
                             Console.WriteLine("You Lose!");
                             indsatCoins -= Bet;
-                            Console.WriteLine("Now you've got " + indsatCoins);
                         }
                     }
                 }
